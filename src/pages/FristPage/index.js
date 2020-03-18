@@ -5,6 +5,7 @@ import { Background, ButtonGo, IconChatty, InputKeyName } from '@chatty/componen
 const styles = {}
 
 function FristPage(props) {
+    const { socket } = props;
     const [username, setUsername] = useState("");
 
     function login() {
@@ -13,6 +14,7 @@ function FristPage(props) {
 
     const handleChange = event => {
         setUsername(event.target.value);
+        socket.emit('add user', username);
     }
 
     return (

@@ -5,25 +5,9 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import { routes } from '@chatty/routers';
+// import { routes } from '@chatty/routers';
 import socketIOClient from 'socket.io-client';
-
-
-function RouteWithSubRoutes(route) {
-  return (
-    <Route
-      path={route.path}
-      exact={(route.exact !== undefined ? route.exact : false)}
-      render={props => (
-        // pass the sub-routes down to keep nesting
-        <route.component {...props} routes={route.routes} socket={props.socket} />
-      )}
-    />
-  );
-}
-
-
-
+import { FristPage } from '@chatty/pages';
 function App() {
 
   const [socket_url] = useState("http://locahost:4000")
@@ -32,9 +16,11 @@ function App() {
   return (
     <Fragment>
       <Switch>
-        {routes.map((route, index) => (
-          <RouteWithSubRoutes key={index} {...route} socket={socket} />
-        ))}
+        <Route
+          path="/"
+          exact={true}>
+          <FristPage socket={socket} />
+        </Route>
       </Switch>
     </Fragment>
   );
