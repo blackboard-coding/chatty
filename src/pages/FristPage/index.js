@@ -9,12 +9,15 @@ function FristPage(props) {
     const [username, setUsername] = useState("");
 
     function login() {
+        socket.emit('add user', username);
 
+        console.log(`click ButtonGo => ${username}`);
     }
 
     const handleChange = event => {
         setUsername(event.target.value);
-        socket.emit('add user', username);
+        
+        
     }
 
     return (
