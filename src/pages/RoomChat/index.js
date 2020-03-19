@@ -6,16 +6,29 @@ import { Background, Header, Footer } from '@chatty/components';
 const styles = {};
 
 function RoomChatPage(props) {
-    const { socket, user } = props;
+    const { socket } = props;
     return (
         <Fragment>
             <Background bg_color="#FFF">
                 <div>
-                    <Header username={user.username} />
+                    <Header username="" />
                     <div style={{
-                        height: (window.innerHeight - (75+75))
-                    }}></div>
-                    <Footer username={user.username} />
+                        height: (window.innerHeight - (75 + 75))
+                    }}>
+                        {/* {showMsg !== null ? (
+                            <Fragment>
+                                {showMsg.map((msg, i) => (
+                                    <p key={i}>{msg.messager}</p>
+                                ))}
+                            </Fragment>
+                        ) : (
+                                <Fragment>
+
+                                </Fragment>
+                            )} */}
+
+                    </div>
+                    <Footer socket={socket} />
                 </div>
             </Background>
         </Fragment>

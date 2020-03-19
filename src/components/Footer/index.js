@@ -1,13 +1,12 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import { withStyles, Button } from '@material-ui/core';
-import { CameraIcon,PictureIcon,SendIcon } from '@chatty/icons';
+import { CameraIcon, PictureIcon, SendIcon } from '@chatty/icons';
 
 const styles = {};
 
 function Footer(props) {
-    const { username } = props;
-    const [textMsg ,setTextMsg] =useState("");
-    const [msg,setMsg] = useState(null)
+    const { socket } = props;
+    const [textMsg, setTextMsg] = useState("");
     const inputEl = useRef("");
 
     const handleChange = event => {
@@ -15,8 +14,13 @@ function Footer(props) {
     }
 
     const Send = () => {
+        // console.log({
+        //     username: user.username,
+        //     messager: textMsg
+        // });
+        socket.emit('new message', textMsg);
         setTextMsg("")
-        console.log(inputEl.current.focus());
+        // console.log(inputEl.current.focus());
         inputEl.current.focus();
     }
     return (
@@ -30,7 +34,7 @@ function Footer(props) {
                 display: 'grid',
                 width: '-webkit-fill-available',
             }}>
-               
+
                 <div style={{
                     display: 'flex'
                 }}>
@@ -51,7 +55,7 @@ function Footer(props) {
                     <div style={{
                         width: "-webkit-fill-available"
                     }}>
-                        <input ref={inputEl} type="text" value={textMsg}  style={{
+                        <input ref={inputEl} type="text" value={textMsg} style={{
                             width: '-webkit-fill-available',
                             borderRadius: '5px',
                             border: 'white',
@@ -59,10 +63,10 @@ function Footer(props) {
                             margin: '5px',
                             padding: '5px',
                             fontSize: '15px'
-                        
+
                         }} onChange={
                             handleChange
-                        }/>
+                        } />
                     </div>
                     <div style={{
                         display: "flex"
@@ -72,7 +76,7 @@ function Footer(props) {
                         </Button>
                     </div>
                 </div>
-                 <div style={{
+                <div style={{
                     height: '25px'
                 }}></div>
             </div>

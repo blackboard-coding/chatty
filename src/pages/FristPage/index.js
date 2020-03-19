@@ -1,24 +1,30 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Background, ButtonGo, IconChatty, InputKeyName } from '@chatty/components';
+import PropTypes from 'prop-types'
 
 const styles = {}
 
 function FristPage(props) {
-    const { socket } = props;
+    const { socket, callbackUsername } = props;
     const [username, setUsername] = useState("");
+    const [name, setName] = useState("");
 
     function login() {
         socket.emit('add user', username);
-
+        setName(username)
         console.log(`click ButtonGo => ${username}`);
     }
 
     const handleChange = event => {
         setUsername(event.target.value);
         
-        
+
     }
+if(callbackUsername) {
+    callbackUsername(name)
+
+}
 
     return (
         <Fragment>
@@ -53,6 +59,10 @@ function FristPage(props) {
             </Background>
         </Fragment>
     )
+}
+
+FristPage.propTypes = {
+    callbackUsername: PropTypes.func.isRequired
 }
 
 export default withStyles(styles, { name: "FirstPages" })(FristPage);

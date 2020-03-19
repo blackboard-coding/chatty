@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 // import logo from './logo.svg';
 // import './App.css';
-import { useLoginSocket } from '@chatty/store';
+import { useSocketOn } from '@chatty/store';
 import {
   Switch,
   Route
@@ -13,24 +13,27 @@ function App() {
 
   const [socket_url] = useState("http://localhost:4000/")
   const socket = socketIOClient(socket_url)
-  const { user } = useLoginSocket(socket);
+  const { addParticipantsMessage, addChatMessage ,addChatTyping, setUsername } = useSocketOn(socket);
 
   // console.log(user);
 
   return (
     <Fragment>
       <Switch>
-        {user !== null ? (
+        {addParticipantsMessage !== null ? (
           <Route
           path="/"
           exact={true}>
-          <RoomChatPage socket={socket} user={user}/>
+          <RoomChatPage socket={socket}/>
         </Route>
         ) : (
             <Route
               path="/"
               exact={true}>
-              <FristPage socket={socket} />
+              <FristPage socket={socket} callbackUsername={(username) => {
+                setUsername(username)
+                
+              }} />
             </Route>
           )}
 
