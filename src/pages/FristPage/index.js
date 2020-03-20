@@ -2,29 +2,32 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Background, ButtonGo, IconChatty, InputKeyName } from '@chatty/components';
 import PropTypes from 'prop-types'
-
+// import { useSocketAddUser } from '@chatty/store'
+import { socket } from '@chatty/socket.io'
 const styles = {}
 
 function FristPage(props) {
-    const { socket, callbackUsername } = props;
-    const [username, setUsername] = useState("");
-    const [name, setName] = useState("");
+    const [textValue, setTextValue] = useState("");
+    // const {username,setUsername} = useSocketAddUser()
 
     function login() {
-        socket.emit('add user', username);
-        setName(username)
-        console.log(`click ButtonGo => ${username}`);
+        socket.emit('add user', textValue);
+        // useSocketAddUser(textValue) 
+        // send()
+        // console.log(`click ButtonGo => ${username}`);
     }
 
     const handleChange = event => {
-        setUsername(event.target.value);
-        
+        setTextValue(event.target.value);
+
 
     }
-if(callbackUsername) {
-    callbackUsername(name)
 
-}
+    // useEffect(() => {
+
+    // }, [callbackUsername])
+
+
 
     return (
         <Fragment>
@@ -42,7 +45,7 @@ if(callbackUsername) {
                     }}>
                         {/* <IconChatty /> */}
                         <InputKeyName
-                            value={username}
+                            value={textValue}
                             onChange={handleChange}
                         />
                         <div style={{
@@ -62,7 +65,8 @@ if(callbackUsername) {
 }
 
 FristPage.propTypes = {
-    callbackUsername: PropTypes.func.isRequired
+    callbackUsername: PropTypes.func.isRequired,
+    send: PropTypes.func.isRequired
 }
 
 export default withStyles(styles, { name: "FirstPages" })(FristPage);

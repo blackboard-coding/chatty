@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { withStyles, Button } from '@material-ui/core';
 import { CameraIcon, PictureIcon, SendIcon } from '@chatty/icons';
+import PropTypes from 'prop-types';
 
 const styles = {};
 
 function Footer(props) {
-    const { socket } = props;
+    const { sendMessage } = props;
     const [textMsg, setTextMsg] = useState("");
     const inputEl = useRef("");
 
@@ -18,7 +19,11 @@ function Footer(props) {
         //     username: user.username,
         //     messager: textMsg
         // });
-        socket.emit('new message', textMsg);
+
+        if(sendMessage) {
+            sendMessage(textMsg)
+        }
+        // socket.emit('new message', textMsg);
         setTextMsg("")
         // console.log(inputEl.current.focus());
         inputEl.current.focus();
@@ -82,6 +87,10 @@ function Footer(props) {
             </div>
         </footer>
     )
+}
+
+Footer.propTypes = {
+    sendMessage: PropTypes.func.isRequired
 }
 
 export default withStyles(styles, { name: "Footer" })(Footer)

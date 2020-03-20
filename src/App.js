@@ -9,31 +9,23 @@ import {
 // import { routes } from '@chatty/routers';
 import socketIOClient from 'socket.io-client';
 import { FristPage, RoomChatPage } from '@chatty/pages';
+import { useSocketLoginOn } from '@chatty/store';
 function App() {
-
-  const [socket_url] = useState("http://localhost:4000/")
-  const socket = socketIOClient(socket_url)
-  const { addParticipantsMessage, addChatMessage ,addChatTyping, setUsername } = useSocketOn(socket);
-
-  // console.log(user);
-
+const {data} =useSocketLoginOn()
   return (
     <Fragment>
       <Switch>
-        {addParticipantsMessage !== null ? (
+        {data !== null ? (
           <Route
-          path="/"
-          exact={true}>
-          <RoomChatPage socket={socket}/>
-        </Route>
+            path="/"
+            exact={true}>
+            <RoomChatPage title={data.username} startMsg={data.msg}/>
+          </Route>
         ) : (
             <Route
               path="/"
               exact={true}>
-              <FristPage socket={socket} callbackUsername={(username) => {
-                setUsername(username)
-                
-              }} />
+              <FristPage />
             </Route>
           )}
 
