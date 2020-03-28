@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { withStyles, Button } from '@material-ui/core';
-import { CameraIcon, PictureIcon, SendIcon } from '@chatty/icons';
+import { CameraIcon, SendIcon } from '@chatty/icons';
 import PropTypes from 'prop-types';
+import ButtonUploadPicture from './components/ButtonUploadPicture'
+import ButtonUploadVideo from './components/ButtonUploadVideo'
 
 const styles = {};
 
@@ -20,13 +22,29 @@ function Footer(props) {
         //     messager: textMsg
         // });
 
-        if(sendMessage) {
+        if (sendMessage) {
             sendMessage(textMsg)
         }
         // socket.emit('new message', textMsg);
         setTextMsg("")
         // console.log(inputEl.current.focus());
         inputEl.current.focus();
+    }
+
+    const SendImage = (data) => {
+        if (sendMessage) {
+            sendMessage(data)
+            console.log(data);
+
+        }
+    }
+
+    const SendVideo = (data) => {
+        if (sendMessage) {
+            sendMessage(data)
+            console.log(data);
+
+        }
     }
     return (
         <footer style={{
@@ -49,12 +67,24 @@ function Footer(props) {
                         <Button style={{
                             minWidth: 'auto'
                         }}>
-                            <CameraIcon />
+                            <ButtonUploadVideo sendImage={(data) => {
+                                SendVideo(data)
+                                console.log(data);
+
+                            }
+
+                            } />
                         </Button>
                         <Button style={{
                             minWidth: 'auto'
                         }}>
-                            <PictureIcon />
+                            <ButtonUploadPicture sendImage={(data) => {
+                                SendImage(data)
+                                console.log(data);
+
+                            }
+
+                            } />
                         </Button>
                     </div>
                     <div style={{

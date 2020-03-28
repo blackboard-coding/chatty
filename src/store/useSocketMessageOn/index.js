@@ -5,7 +5,14 @@ export default function useSocketMessageOn() {
   const [messages, setMessages] = useState([]);
   useEffect(() => {
     socket.on('new message', (data) => {
-      setMessages([...messages, data])
+
+      if (typeof data !== "string") {
+        console.log(typeof data);
+        setMessages([...messages, data])
+      } else {
+        setMessages([...messages, data])
+      }
+
     })
   }, [socket])
 
